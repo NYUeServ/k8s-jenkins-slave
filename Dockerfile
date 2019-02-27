@@ -6,8 +6,7 @@ USER root
 COPY jenkins-slave /usr/local/bin/jenkins-slave
 RUN ["chmod", "+x", "/usr/local/bin/jenkins-slave"]
 
-# Update packages
-RUN cat /etc/apt/sources.list
+# Update packages from source
 RUN apt-get update
 
 # Install unzip & git (Already included in debian, which is in the base image)
