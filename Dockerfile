@@ -33,7 +33,7 @@ RUN apt-get -y install build-essential libssl-dev libffi-dev python-dev
 USER jenkins
 
 # Install awscli via pip
-RUN pip3 install awscli
+RUN pip3 install awscli --upgrade --user
 
 # Install boto via pip
 RUN pip3 install boto
