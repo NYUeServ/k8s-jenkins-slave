@@ -30,10 +30,10 @@ RUN apt-get -y install python3 python3-pip
 # Install dependencies for openshift for paramiko
 RUN apt-get -y install build-essential libssl-dev libffi-dev python-dev
 
-USER jenkins
+# Install awscli via pip (requires root)
+RUN pip3 install awscli --upgrade
 
-# Install awscli via pip
-RUN pip3 install awscli --upgrade --user
+USER jenkins
 
 # Install boto via pip
 RUN pip3 install boto
