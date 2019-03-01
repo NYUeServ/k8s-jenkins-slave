@@ -15,7 +15,11 @@ RUN apt-get update
 RUN apt-get -y install software-properties-common apt-transport-https
 
 # Install ansible
-RUN apt-get -y install ansible jq
+RUN apt-add-repository -y --update ppa:ansible/ansible
+RUN apt-get -y install ansible
+
+# Install json query
+RUN apt-get -y install jq
 
 # Install python 3
 RUN apt-get -y install python3 python3-pip
