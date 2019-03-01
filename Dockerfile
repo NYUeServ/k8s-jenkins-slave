@@ -6,6 +6,10 @@ USER root
 COPY jenkins-slave /usr/local/bin/jenkins-slave
 RUN ["chmod", "+x", "/usr/local/bin/jenkins-slave"]
 
+# Add ansible source
+RUN echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >> /etc/apt/sources.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+
 # Update packages from source
 RUN apt-get update
 
@@ -15,7 +19,6 @@ RUN apt-get update
 RUN apt-get -y install software-properties-common apt-transport-https
 
 # Install ansible
-RUN apt-add-repository -y --update ppa:ansible/ansible
 RUN apt-get -y install ansible
 
 # Install json query
