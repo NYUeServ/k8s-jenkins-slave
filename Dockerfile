@@ -2,9 +2,17 @@ FROM jenkins/slave:3.27-1
 MAINTAINER Eric Lin <eric.lin@nyu.edu>
 LABEL Description="NYU's docker image used in jenkins to build and deploy"
 
+# Assume as root user
 USER root
+
+# Initialize jenkins-slave agent
 COPY jenkins-slave /usr/local/bin/jenkins-slave
 RUN ["chmod", "+x", "/usr/local/bin/jenkins-slave"]
+
+# Retrieve aws-iam-authenticator from AWS
+RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.11.5/2018-12-06/bin/linux/amd64/aws-iam-authenticator
+RUN ["chmod", "+x", "./aws-iam-authenticator"]
+RUN mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
 
 # Add ansible source
 RUN echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >> /etc/apt/sources.list
@@ -33,12 +41,12 @@ RUN apt-get -y install build-essential libssl-dev libffi-dev python-dev
 # Install awscli via pip (requires root)
 RUN pip3 install awscli --upgrade
 
-USER jenkins
-
 # Install boto via pip
 RUN pip3 install boto
 
 # Install openshift via pip
 RUN pip3 install openshift
+
+USER jenkins
 
 ENTRYPOINT ["jenkins-slave"]
