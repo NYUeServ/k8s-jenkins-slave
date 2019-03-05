@@ -49,8 +49,11 @@ RUN apt-get install -y kubectl
 # Install awscli via pip (requires root)
 RUN pip3 install awscli --upgrade
 
-# Install boto via pip
+# Install boto3 via pip
 RUN pip3 install boto3
+
+#apparently need boto also (ec2 alarm module)
+RUN pip3 install boto
 
 # Install openshift via pip
 RUN pip3 install openshift
