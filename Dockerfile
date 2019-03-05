@@ -50,7 +50,7 @@ RUN apt-get install -y kubectl
 RUN pip3 install awscli --upgrade
 
 # Install boto via pip
-RUN pip3 install boto
+RUN pip3 install boto3
 
 # Install openshift via pip
 RUN pip3 install openshift
