@@ -46,6 +46,9 @@ RUN apt-get -y install build-essential libssl-dev libffi-dev python-dev
 # Install kubectl
 RUN apt-get install -y kubectl
 
+# Install sudo
+RUN apt-get -y install sudo
+
 # Install awscli via pip (requires root)
 RUN pip3 install awscli --upgrade
 
@@ -57,6 +60,9 @@ RUN pip3 install boto
 
 # Install openshift via pip
 RUN pip3 install openshift
+
+# Add Jenkins user as a sudoer
+RUN useradd -m jenkins && echo "jenkins:jenkins" | chpasswd && adduser jenkins sudo
 
 USER jenkins
 
