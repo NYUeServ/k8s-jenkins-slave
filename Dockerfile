@@ -62,7 +62,7 @@ RUN pip3 install boto
 RUN pip3 install openshift
 
 # Add Jenkins user as a sudoer
-RUN useradd -m jenkins && echo "jenkins:jenkins" | chpasswd && adduser jenkins sudo
+RUN echo "jenkins:jenkins" | chpasswd && adduser jenkins sudo
 
 USER jenkins
 
