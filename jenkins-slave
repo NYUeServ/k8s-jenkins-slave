@@ -34,20 +34,20 @@ set -ex
 
 if [ $# -eq 1 ]; then
     # start the docker daemon
-    /usr/local/bin/wrapdocker &
+    #/usr/local/bin/wrapdocker &
 
     # start the ssh daemon
-    /usr/sbin/sshd -D
+    #/usr/sbin/sshd -D
 
     # if `docker run` only has one arguments, we assume user is running alternate command like `bash` to inspect the image
     exec "$@"
 
 else
     # start the docker daemon
-    /usr/local/bin/wrapdocker &
+    #/usr/local/bin/wrapdocker &
 
     # start the ssh daemon
-    /usr/sbin/sshd -D
+    #/usr/sbin/sshd -D
 
     # if -tunnel is not provided, try env vars
     case "$@" in
