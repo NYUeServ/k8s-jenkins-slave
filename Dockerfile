@@ -30,7 +30,7 @@ RUN add-apt-repository \
     $(lsb_release -cs) \
     stable"
 # Install Docker from Docker Inc. repositories.
-RUN apt-get update -qq && apt-get install -qqy docker-ce=17.09.0~ce-0~ubuntu
+RUN apt-get update -qq && apt-get install -qqy docker-ce
 
 # Add kubectl source
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
