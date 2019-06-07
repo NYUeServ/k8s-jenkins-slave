@@ -58,8 +58,8 @@ RUN apt-get -y install build-essential libssl-dev libffi-dev python-dev
 # Install kubectl
 RUN apt-get install -y kubectl
 
-# Install sudo
-RUN apt-get -y install sudo
+# Install sudo and ssh
+RUN apt-get -y install sudo ssh
 
 # Install awscli via pip (requires root)
 RUN pip3 install awscli --upgrade
