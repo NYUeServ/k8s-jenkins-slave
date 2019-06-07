@@ -13,12 +13,21 @@ RUN ["chmod", "+x", "/usr/local/bin/jenkins-slave"]
 RUN apt-get update
 
 # Install software-properties-common and apt-transport-https (must be first)
-RUN apt-get -y install software-properties-common apt-transport-https
+RUN apt-get -y install software-properties-common apt-transport-https ca-certificates curl
 
 # Retrieve aws-iam-authenticator from AWS
 RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.11.5/2018-12-06/bin/linux/amd64/aws-iam-authenticator
 RUN ["chmod", "+x", "./aws-iam-authenticator"]
 RUN mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
+
+# Download docker
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+RUN add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable"
+# Install Docker from Docker Inc. repositories.
+RUN apt-get update -qq && apt-get install -qqy docker-ce=17.09.0~ce-0~ubuntu
 
 # Add kubectl source
 RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
@@ -57,6 +66,19 @@ RUN pip3 install boto
 
 # Install openshift via pip
 RUN pip3 install openshift
+
+ADD wrapdocker /usr/local/bin/wrapdocker
+RUN chmod +x /usr/local/bin/wrapdocker
+VOLUME /var/lib/docker
+
+# Make sure that the "jenkins" user from evarga's image is part of the "docker"
+# group. Needed to access the docker daemon's unix socket.
+RUN usermod -a -G docker jenkins
+
+# place the jenkins slave startup script into the container
+ADD jenkins-slave-startup.sh /
+RUN chmod +x jenkins-slave-startup.sh
+RUN jenkins-slave-startup.sh
 
 USER jenkins
 
