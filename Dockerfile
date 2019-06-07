@@ -13,7 +13,10 @@ RUN ["chmod", "+x", "/usr/local/bin/jenkins-slave"]
 RUN apt-get update
 
 # Install software-properties-common and apt-transport-https (must be first)
-RUN apt-get -y install software-properties-common apt-transport-https ca-certificates curl
+RUN apt-get -y install software-properties-common apt-transport-https
+
+# Install other necessary files
+RUN apt-get -y install ca-certificates curl
 
 # Retrieve aws-iam-authenticator from AWS
 RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.11.5/2018-12-06/bin/linux/amd64/aws-iam-authenticator
