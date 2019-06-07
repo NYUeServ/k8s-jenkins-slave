@@ -87,7 +87,7 @@ RUN usermod -a -G docker jenkins
 # place the jenkins slave startup script into the container
 COPY jenkins-slave-startup.sh /usr/local/bin/jenkins-slave-startup.sh
 RUN ["chmod", "+x", "/usr/local/bin/jenkins-slave-startup.sh"]
-CMD ["/usr/local/bin/jenkins-slave-startup.sh"]
+CMD ["sudo", "/usr/local/bin/jenkins-slave-startup.sh"]
 
 USER jenkins
 
